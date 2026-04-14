@@ -1,3 +1,4 @@
+/*
 package chapter_03;
 
 import java.time.Month;
@@ -10,3 +11,4 @@ public class BankTransactionIsInFebruaryAndExpensive implements BankTransactionF
                 && bankTransaction.getAmount() >= 1_000;
     }
 }
+*/

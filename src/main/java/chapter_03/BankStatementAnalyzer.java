@@ -25,6 +25,14 @@ public class BankStatementAnalyzer {
 
         collectSummary(bankStatementProcessor);
 
+        System.out.println("--- Filtering with Lambda ---");
+        final List<BankTransaction> inFebruaryAndExpensiveTransactions
+                = bankStatementProcessor.findTransactions(
+                bankTransaction -> bankTransaction.getDate().getMonth() == Month.FEBRUARY
+                        && bankTransaction.getAmount() >= 1_000
+        );
+        System.out.println("In February And Expensive Transactions:");
+        inFebruaryAndExpensiveTransactions.forEach(System.out::println);
     }
 
     private static void collectSummary(final BankStatementProcessor bankStatementProcessor) {
