@@ -23,8 +23,6 @@ public class BankStatementAnalyzer {
         final BankStatementProcessor bankStatementProcessor
                 = new BankStatementProcessor(bankTransactions);
 
-        collectSummary(bankStatementProcessor);
-
         System.out.println("--- Filtering with Lambda ---");
         final List<BankTransaction> inFebruaryAndExpensiveTransactions
                 = bankStatementProcessor.findTransactions(
@@ -35,6 +33,7 @@ public class BankStatementAnalyzer {
         inFebruaryAndExpensiveTransactions.forEach(System.out::println);
     }
 
+    /*
     private static void collectSummary(final BankStatementProcessor bankStatementProcessor) {
         System.out.println("The total for all transactions is "
                 + bankStatementProcessor.calculateTotalAmount());
@@ -47,5 +46,5 @@ public class BankStatementAnalyzer {
 
         System.out.println("The total salary received is "
                 + bankStatementProcessor.calculateTotalForCategory("Salary"));
-    }
+    }*/
 }

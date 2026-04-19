@@ -12,6 +12,34 @@ public class BankStatementProcessor {
         this.bankTransactions = bankTransactions;
     }
 
+    public double summarizeTransactions(final BankTransactionSummarizer bankTransactionSummarizer) {
+        double result = 0.0;
+        for (final BankTransaction bankTransaction : bankTransactions) {
+            result = bankTransactionSummarizer.summarize(result, bankTransaction);
+        }
+        return result;
+    }
+
+    public double calculateTotalInMonth(final Month month) {
+        return summarizeTransactions((acc, bankTransactions) ->
+                bankTransactions.getDate().getMonth() == month ? acc + bankTransactions.getAmount() : acc
+        );
+    }
+
+    public List<BankTransaction> findTransactions(final BankTransactionFilter bankTransactionFilter) {
+        final List<BankTransaction> result = new ArrayList<>();
+        for (final BankTransaction bankTransaction : bankTransactions) {
+            if (bankTransactionFilter.test(bankTransaction)) {
+                result.add(bankTransaction);
+            }
+        }
+        return result;
+    }
+
+    public List<BankTransaction> findTransactionGreaterThanEqual(final int amount) {
+        return findTransactions(bankTransaction -> bankTransaction.getAmount() >= amount);
+    }
+/*
     public double calculateTotalAmount() {
         double total = 0;
         for (final BankTransaction bankTransaction : bankTransactions) {
@@ -40,16 +68,6 @@ public class BankStatementProcessor {
         return total;
     }
 
-    public List<BankTransaction> findTransactions(final BankTransactionFilter bankTransactionFilter) {
-        final List<BankTransaction> result =  new ArrayList<>();
-        for (final BankTransaction bankTransaction : bankTransactions) {
-            if (bankTransactionFilter.test(bankTransaction)) {
-                result.add(bankTransaction);
-            }
-        }
-        return result;
-    }
-/*
     public List<BankTransaction> findTransactionsGreaterThanEqual(final int amount) {
         final List<BankTransaction> result = new ArrayList<>();
         for (final BankTransaction bankTransaction : bankTransactions) {
